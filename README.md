@@ -17,28 +17,42 @@ A FastAPI-based application that generates professional PDF financial reports fo
 
 - Python 3.8+
 - Windows/Mac/Linux
+- Git
 
 ### Installation
 
-1. **Clone the repository** (or extract the project folder)
+1. **Clone the repository**
+
    ```bash
-   cd "d:\4_Gramiq\Finance Report Generator for Farmers using FASTAPI Backend"
+   git clone https://github.com/anushdighore/Farm-Finance-Report-Generator.git
+   cd "Farm-Finance-Report-Generator"
    ```
 
 2. **Create a virtual environment**
+
    ```bash
    python -m venv venv
    ```
 
 3. **Activate the virtual environment**
-   - **Windows:**
-     ```bash
-     venv\Scripts\activate
-     ```
-   - **Mac/Linux:**
-     ```bash
-     source venv/bin/activate
-     ```
+
+   **Windows:**
+
+   ```bash
+   venv\Scripts\activate
+   ```
+
+   _(If the above doesn't work, try:)_
+
+   ```bash
+   source venv/Scripts/activate
+   ```
+
+   **Mac/Linux:**
+
+   ```bash
+   source venv/bin/activate
+   ```
 
 4. **Install dependencies**
    ```bash
@@ -47,33 +61,37 @@ A FastAPI-based application that generates professional PDF financial reports fo
 
 ## How to Run the Application
 
-1. **Ensure virtual environment is activated** (see Setup step 3)
+1. **Activate the virtual environment** (see Setup step 3)
 
-2. **Start the FastAPI server**
+2. **Run the application**
+
    ```bash
-   uvicorn app.main:app --reload
+   python run.py
    ```
-   - Server will run at: `http://127.0.0.1:8000`
-   - Auto-reload enabled for development
 
-3. **Open in browser**
-   - Navigate to: `http://127.0.0.1:8000`
-   - Fill in the farm details, expenses, and income
+   - Server will start at: `http://127.0.0.1:8000`
+   - Open this URL in your browser
+
+3. **Fill the form and generate PDF**
+   - Enter farm details, expenses, and income
    - Click "Generate Report" to download the PDF
 
 ## Libraries Used
 
 ### Backend
+
 - **FastAPI** - Modern Python web framework for building APIs
 - **Uvicorn** - ASGI server for running FastAPI
 - **Pydantic** - Data validation using Python type hints
 - **Python-multipart** - Handle multipart form data
 
 ### PDF Generation
+
 - **ReportLab** - Create professional PDF documents programmatically
 - **Matplotlib** - Generate charts and visualizations
 
 ### Frontend
+
 - **HTML5/CSS3** - Form interface and styling
 - **Vanilla JavaScript** - Form submission and PDF download handling
 - **Fetch API** - Communicate with backend endpoints
@@ -116,46 +134,12 @@ Finance Report Generator/
 ## API Endpoints
 
 ### POST `/api/validate-finance`
+
 Validates farmer and finance data without generating PDF.
 
-**Request Body:**
-```json
-{
-  "farmer_details": {
-    "farmer_name": "John Doe",
-    "crop_name": "Wheat",
-    "season": "Kharif",
-    "total_acres": 5,
-    "sowing_date": "2025-05-15",
-    "harvest_date": "2025-10-15",
-    "village": "Village Name",
-    "taluka": "Taluka Name",
-    "district": "District Name",
-    "state": "State Name"
-  },
-  "expenses": [
-    {
-      "category": "Fertilizers",
-      "amount": 1500,
-      "expense_date": "2025-06-01",
-      "description": "Bought XYZ fertilizer"
-    }
-  ],
-  "income": [
-    {
-      "category": "Main Crop",
-      "amount": 25000,
-      "income_date": "2025-11-01",
-      "description": "Crop sale"
-    }
-  ]
-}
-```
-
 ### POST `/api/generate-report`
-Generates and returns PDF report.
 
-**Response:** Binary PDF file
+Generates and returns PDF report.
 
 ## PDF Report Sections
 
@@ -177,22 +161,6 @@ Generates and returns PDF report.
 - ✅ Error handling with detailed messages
 - ✅ Responsive design
 
-## Troubleshooting
-
-### Port 8000 already in use
-```bash
-uvicorn app.main:app --reload --port 8001
-```
-
-### Module not found errors
-Ensure virtual environment is activated and dependencies are installed:
-```bash
-pip install -r requirements.txt
-```
-
-### PDF not downloading
-Check browser console (F12) for errors. Ensure backend is running and accessible.
-
 ## Development Notes
 
 - **Frontend validation** prevents invalid data submission
@@ -203,4 +171,4 @@ Check browser console (F12) for errors. Ensure backend is running and accessible
 
 ## Support
 
-For issues or questions, check the console output from the FastAPI server for detailed error messages.
+For issues or questions, check the console output from the application for detailed error messages.
