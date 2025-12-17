@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Farm Finance Report Generator</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="{{ url_for('static', path='style.css') }}" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container-main">
+      <div class="header">
+        <h1>🌾 Farm Finance Report Generator</h1>
+        <p>Manage your farm finances with ease</p>
+      </div>
+
+      <div class="card">
+        <div class="card-body p-4">
+          <form id="financeForm">
+            <!-- FARMER & CROP DETAILS -->
+            <div class="form-section">
+              <h3 class="section-title">Farmer & Crop Details</h3>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="farmerName" class="form-label"
+                    >Farmer Name *</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="farmerName"
+                    name="farmerName"
+                    required
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="cropName" class="form-label">Crop Name *</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="cropName"
+                    name="cropName"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="season" class="form-label">Season *</label>
+                  <select
+                    class="form-control"
+                    id="season"
+                    name="season"
+                    required
+                  >
+                    <option value="">Select Season</option>
+                    <option value="Kharif">Kharif</option>
+                    <option value="Rabi">Rabi</option>
+                    <option value="Summer">Summer</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="totalAcres" class="form-label"
+                    >Total Acres *</label
+                  >
+                  <input
+                    type="number"
+                    step="0.1"
+                    class="form-control"
+                    id="totalAcres"
+                    name="totalAcres"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="sowingDate" class="form-label"
+                    >Date of Sowing *</label
+                  >
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="sowingDate"
+                    name="sowingDate"
+                    required
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="harvestDate" class="form-label"
+                    >Date of Harvest *</label
+                  >
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="harvestDate"
+                    name="harvestDate"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3 mb-3">
+                  <label for="village" class="form-label">Village *</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="village"
+                    name="village"
+                    required
+                  />
+                </div>
+                <div class="col-md-3 mb-3">
+                  <label for="taluka" class="form-label">Taluka *</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="taluka"
+                    name="taluka"
+                    required
+                  />
+                </div>
+                <div class="col-md-3 mb-3">
+                  <label for="district" class="form-label">District *</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="district"
+                    name="district"
+                    required
+                  />
+                </div>
+                <div class="col-md-3 mb-3">
+                  <label for="state" class="form-label">State *</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="state"
+                    name="state"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- EXPENSES -->
+            <div class="form-section">
+              <h3 class="section-title">Expenses</h3>
+              <div id="expensesContainer">
+                <!-- Expense Row 1 -->
+                <div class="expense-item">
+                  <div class="row">
+                    <div class="col-md-3 mb-3">
+                      <label class="form-label">Category</label>
+                      <input
+                        type="text"
+                        class="form-control expense-category"
+                        placeholder="e.g., Seeds, Fertilizer"
+                      />
+                    </div>
+                    <div class="col-md-2 mb-3">
+                      <label class="form-label">Amount</label>
+                      <input
+                        type="number"
+                        step="0.01"
+                        class="form-control expense-amount"
+                        placeholder="0.00"
+                      />
+                    </div>
+                    <div class="col-md-2 mb-3">
+                      <label class="form-label">Date</label>
+                      <input type="date" class="form-control expense-date" />
+                    </div>
+                    <div class="col-md-5 mb-3">
+                      <label class="form-label">Description</label>
+                      <input
+                        type="text"
+                        class="form-control expense-description"
+                        placeholder="Optional"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- Expense Row 2 -->
+                <div class="expense-item">
+                  <div class="row">
+                    <div class="col-md-3 mb-3">
+                      <input
+                        type="text"
+                        class="form-control expense-category"
+                        placeholder="e.g., Seeds, Fertilizer"
+                      />
+                    </div>
+                    <div class="col-md-2 mb-3">
+                      <input
+                        type="number"
+                        step="0.01"
+                        class="form-control expense-amount"
+                        placeholder="0.00"
+                      />
+                    </div>
+                    <div class="col-md-2 mb-3">
+                      <input type="date" class="form-control expense-date" />
+                    </div>
+                    <div class="col-md-5 mb-3">
+                      <input
+                        type="text"
+                        class="form-control expense-description"
+                        placeholder="Optional"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- Expense Row 3 -->
+                <div class="expense-item">
+                  <div class="row">
+                    <div class="col-md-3 mb-3">
+                      <input
+                        type="text"
+                        class="form-control expense-category"
+                        placeholder="e.g., Seeds, Fertilizer"
+                      />
+                    </div>
+                    <div class="col-md-2 mb-3">
+                      <input
+                        type="number"
+                        step="0.01"
+                        class="form-control expense-amount"
+                        placeholder="0.00"
+                      />
+                    </div>
+                    <div class="col-md-2 mb-3">
+                      <input type="date" class="form-control expense-date" />
+                    </div>
+                    <div class="col-md-5 mb-3">
+                      <input
+                        type="text"
+                        class="form-control expense-description"
+                        placeholder="Optional"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- Expense Row 4 -->
+                <div class="expense-item">
+                  <div class="row">
+                    <div class="col-md-3 mb-3">
+                      <input
+                        type="text"
+                        class="form-control expense-category"
+                        placeholder="e.g., Seeds, Fertilizer"
+                      />
+                    </div>
+                    <div class="col-md-2 mb-3">
+                      <input
+                        type="number"
+                        step="0.01"
+                        class="form-control expense-amount"
+                        placeholder="0.00"
+                      />
+                    </div>
+                    <div class="col-md-2 mb-3">
+                      <input type="date" class="form-control expense-date" />
+                    </div>
+                    <div class="col-md-5 mb-3">
+                      <input
+                        type="text"
+                        class="form-control expense-description"
+                        placeholder="Optional"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- Expense Row 5 -->
+                <div class="expense-item">
+                  <div class="row">
+                    <div class="col-md-3 mb-3">
+                      <input
+                        type="text"
+                        class="form-control expense-category"
+                        placeholder="e.g., Seeds, Fertilizer"
+                      />
+                    </div>
+                    <div class="col-md-2 mb-3">
+                      <input
+                        type="number"
+                        step="0.01"
+                        class="form-control expense-amount"
+                        placeholder="0.00"
+                      />
+                    </div>
+                    <div class="col-md-2 mb-3">
+                      <input type="date" class="form-control expense-date" />
+                    </div>
+                    <div class="col-md-5 mb-3">
+                      <input
+                        type="text"
+                        class="form-control expense-description"
+                        placeholder="Optional"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- INCOME -->
+            <div class="form-section">
+              <h3 class="section-title">Income</h3>
+              <div id="incomeContainer">
+                <!-- Income Row 1 -->
+                <div class="income-item">
+                  <div class="row">
+                    <div class="col-md-3 mb-3">
+                      <label class="form-label">Category</label>
+                      <input
+                        type="text"
+                        class="form-control income-category"
+                        placeholder="e.g., Crop Sales"
+                      />
+                    </div>
+                    <div class="col-md-2 mb-3">
+                      <label class="form-label">Amount</label>
+                      <input
+                        type="number"
+                        step="0.01"
+                        class="form-control income-amount"
+                        placeholder="0.00"
+                      />
+                    </div>
+                    <div class="col-md-2 mb-3">
+                      <label class="form-label">Date</label>
+                      <input type="date" class="form-control income-date" />
+                    </div>
+                    <div class="col-md-5 mb-3">
+                      <label class="form-label">Description</label>
+                      <input
+                        type="text"
+                        class="form-control income-description"
+                        placeholder="Optional"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- Income Row 2 -->
+                <div class="income-item">
+                  <div class="row">
+                    <div class="col-md-3 mb-3">
+                      <input
+                        type="text"
+                        class="form-control income-category"
+                        placeholder="e.g., Crop Sales"
+                      />
+                    </div>
+                    <div class="col-md-2 mb-3">
+                      <input
+                        type="number"
+                        step="0.01"
+                        class="form-control income-amount"
+                        placeholder="0.00"
+                      />
+                    </div>
+                    <div class="col-md-2 mb-3">
+                      <input type="date" class="form-control income-date" />
+                    </div>
+                    <div class="col-md-5 mb-3">
+                      <input
+                        type="text"
+                        class="form-control income-description"
+                        placeholder="Optional"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- Income Row 3 -->
+                <div class="income-item">
+                  <div class="row">
+                    <div class="col-md-3 mb-3">
+                      <input
+                        type="text"
+                        class="form-control income-category"
+                        placeholder="e.g., Crop Sales"
+                      />
+                    </div>
+                    <div class="col-md-2 mb-3">
+                      <input
+                        type="number"
+                        step="0.01"
+                        class="form-control income-amount"
+                        placeholder="0.00"
+                      />
+                    </div>
+                    <div class="col-md-2 mb-3">
+                      <input type="date" class="form-control income-date" />
+                    </div>
+                    <div class="col-md-5 mb-3">
+                      <input
+                        type="text"
+                        class="form-control income-description"
+                        placeholder="Optional"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- Income Row 4 -->
+                <div class="income-item">
+                  <div class="row">
+                    <div class="col-md-3 mb-3">
+                      <input
+                        type="text"
+                        class="form-control income-category"
+                        placeholder="e.g., Crop Sales"
+                      />
+                    </div>
+                    <div class="col-md-2 mb-3">
+                      <input
+                        type="number"
+                        step="0.01"
+                        class="form-control income-amount"
+                        placeholder="0.00"
+                      />
+                    </div>
+                    <div class="col-md-2 mb-3">
+                      <input type="date" class="form-control income-date" />
+                    </div>
+                    <div class="col-md-5 mb-3">
+                      <input
+                        type="text"
+                        class="form-control income-description"
+                        placeholder="Optional"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- Income Row 5 -->
+                <div class="income-item">
+                  <div class="row">
+                    <div class="col-md-3 mb-3">
+                      <input
+                        type="text"
+                        class="form-control income-category"
+                        placeholder="e.g., Crop Sales"
+                      />
+                    </div>
+                    <div class="col-md-2 mb-3">
+                      <input
+                        type="number"
+                        step="0.01"
+                        class="form-control income-amount"
+                        placeholder="0.00"
+                      />
+                    </div>
+                    <div class="col-md-2 mb-3">
+                      <input type="date" class="form-control income-date" />
+                    </div>
+                    <div class="col-md-5 mb-3">
+                      <input
+                        type="text"
+                        class="form-control income-description"
+                        placeholder="Optional"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- BUTTONS -->
+            <div class="text-center mt-4">
+              <button type="submit" class="btn btn-submit">
+                Generate Report
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- SUMMARY -->
+      <div id="summaryBox" class="summary-box" style="display: none">
+        <h3>📊 Finance Summary</h3>
+        <div class="summary-item">
+          <span class="summary-label">Total Expenses:</span>
+          <span class="summary-value"
+            >₹<span id="totalExpenses">0.00</span></span
+          >
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Total Income:</span>
+          <span class="summary-value">₹<span id="totalIncome">0.00</span></span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Net Profit:</span>
+          <span class="summary-value">₹<span id="netProfit">0.00</span></span>
+        </div>
+        <div class="text-center mt-3">
+          <button
+            id="downloadPdfBtn"
+            class="btn btn-success"
+            style="display: none"
+          >
+            📄 Download PDF Report
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', path='main.js') }}"></script>
+  </body>
+</html>
